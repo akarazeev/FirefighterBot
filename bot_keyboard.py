@@ -1,8 +1,9 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from math import sin, cos, sqrt, atan2, radians
-from weather import Weather, Unit
 from staticmap import StaticMap, Line
+from weather import Weather, Unit
+from sklearn import linear_model
 import catboost
 import datetime
 import pandas as pd
@@ -39,6 +40,12 @@ THANKYOU = 'Thank you for your contribution in firefighting!'
 THANKSFORUSAGE = 'Thanks for using this bot. Have a nice day!'
 
 users_locations = dict()
+
+
+data_forest_kaggle = pd.read_csv('forestfires.csv')
+
+estimator = linear_model.LinearRegression()
+estimator.fit(data_forest_kaggle.drop(columns=['area']), data_forest_kaggle['area'])
 
 
 def get_token():
@@ -131,14 +138,14 @@ def text_handler(bot, update):
             'row1': [data['month'], data['day'], data['temp'], data['RH'], data['speed'], data['rain']]
         }
         sample = pd.DataFrame.from_dict(sample, orient='index')
-        prediction = model.predict(sample)
+
+        # prediction = model.predict(sample)
+        prediction = estimator.predict(sample)
 
         data['firearea'] = round(prediction[0])
         data['nearest'] = round(min_distance(float(location['latitude']), float(location['longitude']))[0])
 
         if text == FIRE:
-            print("Please send your location now")
-
             location_keyboard = telegram.KeyboardButton(text=SEND_LOCATION, request_location=True)
 
             custom_keyboard = [[location_keyboard]]
@@ -172,14 +179,14 @@ def text_handler(bot, update):
         elif text == 'Yes':
             if data['firearea'] > 5:
                 bot.send_message(chat_id=chat_id, text="Ok, firefighters are on the way! Be careful")
-                bot.send_message(chat_id=chat_id, text="This fire is very dangerous. Predicted area of fire is about **{}** of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
+                bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN, text="This fire is very dangerous. Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
             else:
                 bot.send_message(chat_id=chat_id, text="Ok, be careful!", reply_markup=None)
 
             thankyou(bot, update)
         elif text == 'No':
             if data['firearea'] > 5:
-                bot.send_message(chat_id=chat_id, text="This fire is very dangerous. Predicted area of fire is about **{}** of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
+                bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN, text="This fire is very dangerous. Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
             else:
                 bot.send_message(chat_id=chat_id, text="Ok, be careful!", reply_markup=None)
 
