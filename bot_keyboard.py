@@ -1,21 +1,18 @@
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from math import sin, cos, sqrt, atan2, radians
 from staticmap import StaticMap, Line
 from weather import Weather, Unit
-from sklearn import linear_model
-import catboost
-import datetime
 import pandas as pd
 import telegram
-import emoji
-import subprocess
+import catboost
+import datetime
 import logging
+import emoji
 import json
 import os
 
 
-# Enable logging
+# Enable logging.
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - \
                             %(message)s', level=logging.INFO)
 
@@ -42,13 +39,6 @@ THANKSFORUSAGE = 'Thanks for using this bot. Have a nice day!'
 users_locations = dict()
 
 
-data_forest_kaggle = pd.read_csv('forestfires.csv')
-data_forest_kaggle.drop(columns=['Unnamed: 0'], inplace=True)
-
-estimator = linear_model.LinearRegression()
-estimator.fit(data_forest_kaggle.drop(columns=['area']), data_forest_kaggle['area'])
-
-
 def get_token():
     path = os.path.join('token.json')
     with open(path) as jsn:
@@ -73,7 +63,7 @@ def img_fire(user_coordinates_lat, user_coordinates_lon):
 
 def min_distance(user_lat, user_lon):
     def calculate_distance(lat1, lon1, lat2, lon2):
-        # approximate radius of earth in km
+        # Approximate radius of earth in km.
         R = 6373.0
 
         lat1 = radians(lat1)
@@ -140,8 +130,7 @@ def text_handler(bot, update):
         }
         sample = pd.DataFrame.from_dict(sample, orient='index')
 
-        # prediction = model.predict(sample)
-        prediction = estimator.predict(sample)
+        prediction = model.predict(sample)
 
         data['firearea'] = round(prediction[0])
         data['nearest'] = round(min_distance(float(location['latitude']), float(location['longitude']))[0])
@@ -179,10 +168,10 @@ def text_handler(bot, update):
             bot.send_message(chat_id=chat_id, text="Should we call firefighters?", reply_markup=reply_markup)
         elif text == 'Yes':
             if data['firearea'] > 5:
-                bot.send_message(chat_id=chat_id, text="Ok, firefighters are on the way! Be careful")
+                bot.send_message(chat_id=chat_id, text="Ok, firefighters are on the way!")
                 bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN, text="This fire is very dangerous. Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
             else:
-                bot.send_message(chat_id=chat_id, text="Ok, be careful!", reply_markup=None)
+                bot.send_message(chat_id=chat_id, text="Ok, firefighters are on the way! Be careful", reply_markup=None)
 
             thankyou(bot, update)
         elif text == 'No':
@@ -193,8 +182,6 @@ def text_handler(bot, update):
 
             thankyou(bot, update)
         elif text == NEAREST_FIRE:
-            #####################
-            #####################
             img_fire(float(location['latitude']), float(location['longitude']))
 
             text = list()
@@ -205,13 +192,6 @@ def text_handler(bot, update):
             text.append("Wind's speed: {} km/h".format(data['speed']))
             text.append("Humidity: {} %".format(data['RH']))
             text.append("Visibility: {}".format(data['vis']))
-            # text.append("Rain: {}".format(data['rain']))
-            # text.append("Predicted area of fire: {}".format(data['firearea']))
-
-            # if prediction > 10:
-            #     text.append(emoji.emojize(':fire:', use_aliases=True))
-            # else:
-            #     text.append(emoji.emojize(':smile:', use_aliases=True))
 
             text = '\n'.join(text)
 
@@ -220,9 +200,6 @@ def text_handler(bot, update):
                 bot.send_photo(chat_id=chat_id, photo=file)
 
             thanksforusage(bot, update)
-
-            #####################
-            #####################
         else:
             location_keyboard = telegram.KeyboardButton(text=SEND_LOCATION, request_location=True)
             fire_keyboard = telegram.KeyboardButton(text=FIRE)
