@@ -8,3 +8,13 @@ Alexander Boyko, Yana Minaylova, Anton Karazeev
 
 ### Screenshots
 
+<table>
+    <tr>
+        <td>
+            <img src="img/img1.jpg">
+        </td>
+        <td>
+            <img src="img/img2.jpg">
+        </td>
+    </tr>
+</table>
