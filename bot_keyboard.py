@@ -172,6 +172,9 @@ def text_handler(bot, update):
                 bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN, text="This fire is very dangerous. Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
             else:
                 bot.send_message(chat_id=chat_id, text="Ok, firefighters are on the way! Be careful", reply_markup=None)
+                bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN,
+                                 text="Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(
+                                     data['firearea'], PHONENUMBER))
 
             thankyou(bot, update)
         elif text == 'No':
@@ -179,6 +182,9 @@ def text_handler(bot, update):
                 bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN, text="This fire is very dangerous. Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(data['firearea'], PHONENUMBER))
             else:
                 bot.send_message(chat_id=chat_id, text="Ok, be careful!", reply_markup=None)
+                bot.send_message(chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN,
+                                 text="Predicted area of fire is about *{}* of hectares. Take care! The number of firefighters is {}".format(
+                                     data['firearea'], PHONENUMBER))
 
             thankyou(bot, update)
         elif text == NEAREST_FIRE:
