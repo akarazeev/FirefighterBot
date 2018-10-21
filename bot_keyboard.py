@@ -43,6 +43,7 @@ users_locations = dict()
 
 
 data_forest_kaggle = pd.read_csv('forestfires.csv')
+data_forest_kaggle.drop(columns=['Unnamed: 0'], inplace=True)
 
 estimator = linear_model.LinearRegression()
 estimator.fit(data_forest_kaggle.drop(columns=['area']), data_forest_kaggle['area'])
