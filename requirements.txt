@@ -1,5 +1,5 @@
 asn1crypto==0.24.0
-catboost==0.10.3
+catboost==0.4.1
 certifi==2018.10.15
 cffi==1.11.5
 chardet==3.0.4

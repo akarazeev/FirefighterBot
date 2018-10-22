@@ -129,9 +129,9 @@ def text_handler(bot, update):
             'row1': [data['month'], data['day'], data['temp'], data['RH'], data['speed'], data['rain']]
         }
         sample = pd.DataFrame.from_dict(sample, orient='index')
-        print(sample)
-        # prediction = model.predict(sample)
-        prediction = [4.0]
+        # print(sample)
+        prediction = model.predict(sample)
+        # prediction = [4.0]
 
         data['firearea'] = round(prediction[0])
         data['nearest'] = round(min_distance(float(location['latitude']), float(location['longitude']))[0])
