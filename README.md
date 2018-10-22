@@ -10,7 +10,7 @@ Implemented during [Space Apps 2018 Challenge](https://2018.spaceappschallenge.o
             <img src="img/alexander.jpg">
         </td>
         <td>
-            [Alexander Boyko](https://www.facebook.com/profile.php?id=100021767708740)
+            <a href="https://www.facebook.com/profile.php?id=100021767708740">Alexander Boyko</a>
         </td>
     </tr>
     <tr>
@@ -18,7 +18,7 @@ Implemented during [Space Apps 2018 Challenge](https://2018.spaceappschallenge.o
             <img src="img/yana.jpg">
         </td>
         <td>
-            [Yana Minaylova](https://www.facebook.com/yana.minaylova.3)
+            <a href="https://www.facebook.com/yana.minaylova.3">Yana Minaylova</a>
         </td>
     </tr>
     <tr>
@@ -26,7 +26,7 @@ Implemented during [Space Apps 2018 Challenge](https://2018.spaceappschallenge.o
             <img src="img/anton.jpg">
         </td>
         <td>
-            [Anton Karazeev](https://www.facebook.com/anton.karazeev)
+            <a href="https://www.facebook.com/anton.karazeev">Anton Karazeev</a>
         </td>
     </tr>
 </table>
