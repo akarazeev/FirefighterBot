@@ -4,7 +4,34 @@ Implemented during [Space Apps 2018 Challenge](https://2018.spaceappschallenge.o
 
 ### Team "[Mommy's scientists](https://2018.spaceappschallenge.org/challenges/volcanoes-icebergs-and-asteroids-oh-my/real-time-fire-app/teams/mommys-scientists/project)"
 
-Alexander Boyko, Yana Minaylova, Anton Karazeev
+<table>
+    <tr>
+        <td>
+            <img src="img/alexander.jpg">
+        </td>
+        <td>
+            [Alexander Boyko](https://www.facebook.com/profile.php?id=100021767708740)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="img/yana.jpg">
+        </td>
+        <td>
+            [Yana Minaylova](https://www.facebook.com/yana.minaylova.3)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="img/anton.jpg">
+        </td>
+        <td>
+            [Anton Karazeev](https://www.facebook.com/anton.karazeev)
+        </td>
+    </tr>
+</table>
+
+
 
 ### Screenshots
 
